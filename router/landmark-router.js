@@ -13,7 +13,6 @@ const router = express.Router()
 
 router.post('/landmark',jsonParser, landmarkController.createLandmark)
 router.put('/update', jsonParser,landmarkController.updateLandmark)
-router.get('/movie/:id', )
 // router.get('/movie/:id', MovieCtrl.getMovieById)
 router.get('/get', jsonParser, landmarkController.getLandmarks)
 router.get('/getComments/:id', jsonParser, landmarkController.getCommentByLandmark)
