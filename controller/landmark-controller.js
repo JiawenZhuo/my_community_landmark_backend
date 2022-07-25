@@ -36,9 +36,6 @@ const createLandmark = (req, res) => {
 
 const updateLandmark = async (req, res) => {
   const body = req.body;
-  // const lat = req.body.lat;
-  // const lng = req.body.lng;
-  // const newComment = req.body.comment;
   console.log(req.body);
 
   if (!body) {
@@ -49,9 +46,12 @@ const updateLandmark = async (req, res) => {
   }
 
   console.log(req.params.id);
+  console.log(req.body.comments[0]);
+
 
   Landmark.findOne({ _id: req.params.id }, (err, landmark) => {
-    console.log("findlandmarker" + err);
+    landmark.comments.push(req.body.comments[0]);
+    console.log("findlandmarker" + landmark.comments);
     if (err) {
       return res.status(404).json({
         err,
