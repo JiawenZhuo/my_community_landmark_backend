@@ -12,7 +12,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 const router = express.Router()
 
 router.post('/landmark',jsonParser, landmarkController.createLandmark)
-router.put('/update', jsonParser,landmarkController.updateLandmark)
+router.put('/update/:id', jsonParser,landmarkController.updateLandmark)
 // router.get('/movie/:id', MovieCtrl.getMovieById)
 router.get('/get', jsonParser, landmarkController.getLandmarks)
 router.get('/getComments/:id', jsonParser, landmarkController.getCommentByLandmark)

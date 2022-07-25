@@ -53,9 +53,9 @@ const updateLandmark = async (req, res) => {
     });
   }
 
-  console.log(req.body.lng);
+  console.log(req.params.id);
 
-  Landmark.findOne({ _id: req.body.id }, (err, landmark) => {
+  Landmark.findOne({ _id: req.params.id }, (err, landmark) => {
     console.log("findlandmarker" + err);
     if (err) {
       return res.status(404).json({
@@ -70,13 +70,13 @@ const updateLandmark = async (req, res) => {
         return res.status(200).json({
           success: true,
           id: landmark._id,
-          message: "Movie updated!",
+          message: "landmark updated!",
         });
       })
       .catch((error) => {
         return res.status(404).json({
           error,
-          message: "Movie not updated!",
+          message: "landmark not updated!",
         });
       });
   });
@@ -84,10 +84,7 @@ const updateLandmark = async (req, res) => {
 
 const getCommentByLandmark = async (req, res) => {
   const body = req.body;
-  // const lat = req.body.lat;
-  // const lng = req.body.lng;
-  // const newComment = req.body.comment;
-  console.log("reqbody" + JSON.stringify(req.params.id));
+
 
   if (!body) {
     return res.status(400).json({
@@ -96,7 +93,6 @@ const getCommentByLandmark = async (req, res) => {
     });
   }
   Landmark.findOne({ _id: req.params.id }, (err, landmark) => {
-    console.log("comments" + landmark);
     if (err) {
       return res.status(404).json({
         err,
@@ -115,9 +111,8 @@ const getCommentByLandmark = async (req, res) => {
 const searchByText = async (req, res) => {
   const searchBy = req.params.keyText;
   const paramRegex = new RegExp(searchBy, "i"); // i for case insensitive
-  console.log("search" + req.params.keyText);
 
-  Landmark.find({ "comments.comment": paramRegex }, (err, landmark) => {
+  Landmark.find({$or:[{"comments.comment": paramRegex}, {"comments.user": paramRegex}]}, (err, landmark) => {
     console.log("landmark" + landmark);
     if (err) {
       return res.status(404).json({
