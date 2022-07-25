@@ -23,6 +23,7 @@ const createLandmark = (req, res) => {
       return res.status(201).json({
         success: true,
         id: landmark._id,
+        landmark,
         message: "landmark created!",
       });
     })
