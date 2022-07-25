@@ -13,10 +13,10 @@ const createLandmark = (req, res) => {
   }
 
   const landmark = new Landmark(body);
-  console.log("landmark" + landmark);
+  console.log("landmark" + landmark.comments);
 
-  const comment = new Comment(req.body.comments);
-  console.log("comment" + comment);
+//   const comment = new Comment(req.body.comments);
+//   console.log("comment" + comment);
 
   if (!landmark) {
     return res.status(400).json({ success: false, error: "no landmark" });
@@ -28,7 +28,7 @@ const createLandmark = (req, res) => {
       return res.status(201).json({
         success: true,
         id: landmark._id,
-        message: "Movie created!",
+        message: "landmark created!",
       });
     })
     .catch((error) => {
@@ -60,7 +60,7 @@ const updateLandmark = async (req, res) => {
     if (err) {
       return res.status(404).json({
         err,
-        message: "Movie not found!",
+        message: "landmark not found!",
       });
     }
 
@@ -150,7 +150,7 @@ const getLandmarks = async (req, res) => {
       return res.status(400).json({ success: false, error: err });
     }
     if (!landmark.length) {
-      return res.status(404).json({ success: false, error: `Movie not found` });
+      return res.status(404).json({ success: false, error: `landmark not found` });
     }
     return res.status(200).json({ success: true, data: landmark });
   })
