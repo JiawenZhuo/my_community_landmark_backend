@@ -2,7 +2,6 @@ const Landmark = require("../models/Landmark");
 const Comment = require("../models/Landmark");
 const createLandmark = (req, res) => {
   const body = req.body;
-  console.log(body + "body");
 
   if (!body) {
     return res.status(400).json({
@@ -13,10 +12,6 @@ const createLandmark = (req, res) => {
   }
 
   const landmark = new Landmark(body);
-  console.log("landmark" + landmark.comments);
-
-//   const comment = new Comment(req.body.comments);
-//   console.log("comment" + comment);
 
   if (!landmark) {
     return res.status(400).json({ success: false, error: "no landmark" });
@@ -113,7 +108,6 @@ const searchByText = async (req, res) => {
   const paramRegex = new RegExp(searchBy, "i"); // i for case insensitive
 
   Landmark.find({$or:[{"comments.comment": paramRegex}, {"comments.user": paramRegex}]}, (err, landmark) => {
-    console.log("landmark" + landmark);
     if (err) {
       return res.status(404).json({
         err,
@@ -126,16 +120,7 @@ const searchByText = async (req, res) => {
         .status(404)
         .json({ err, message: "no matching landmark found!" });
     }
-
-    // console.log(res.json({landmark}))
     return res.status(200).json({ landmark });
-    // console.log(res.status(200).json(landmark))
-
-    // return res.status(200).json({
-    //             success: true,
-    //             landmark: landmark,
-    //             message: 'find!',
-    //         })
   });
 };
 
